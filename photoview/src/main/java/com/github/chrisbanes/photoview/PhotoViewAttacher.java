@@ -92,6 +92,16 @@ public class PhotoViewAttacher implements View.OnTouchListener,
     private boolean mZoomEnabled = true;
     private ScaleType mScaleType = ScaleType.FIT_CENTER;
 
+    public void setTopCrob(boolean topCrob) {
+        isTopCrob = topCrob;
+    }
+
+    public boolean isTopCrob() {
+        return isTopCrob;
+    }
+
+    private boolean isTopCrob = false;
+
     public PhotoViewAttacher(ImageView imageView) {
         mImageView = imageView;
         imageView.setOnTouchListener(this);
@@ -629,8 +639,13 @@ public class PhotoViewAttacher implements View.OnTouchListener,
         } else if (mScaleType == ScaleType.CENTER_CROP) {
             float scale = Math.max(widthScale, heightScale);
             mBaseMatrix.postScale(scale, scale);
-            mBaseMatrix.postTranslate((viewWidth - drawableWidth * scale) / 2F,
-                    (viewHeight - drawableHeight * scale) / 2F);
+            if (!isTopCrob) {
+                mBaseMatrix.postTranslate((viewWidth - drawableWidth * scale) / 2F,
+                        (viewHeight - drawableHeight * scale) / 2F);
+            } else {
+                mBaseMatrix.postTranslate((viewWidth - drawableWidth * scale) / 2F,
+                        0);
+            }
 
         } else if (mScaleType == ScaleType.CENTER_INSIDE) {
             float scale = Math.min(1.0f, Math.min(widthScale, heightScale));

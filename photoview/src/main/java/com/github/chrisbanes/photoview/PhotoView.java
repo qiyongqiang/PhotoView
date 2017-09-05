@@ -33,6 +33,19 @@ public class PhotoView extends ImageView {
 
     private PhotoViewAttacher attacher;
 
+    public void setTopCrob(boolean topCrob) {
+        if (attacher != null) {
+            attacher.setTopCrob(topCrob);
+        }
+    }
+
+    public boolean getTopCrob() {
+        if (attacher != null) {
+            attacher.isTopCrob();
+        }
+        return false;
+    }
+
     public PhotoView(Context context) {
         this(context, null);
     }
